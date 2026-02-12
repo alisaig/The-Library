@@ -14,7 +14,14 @@ function Book(title, author, rating, status, pages, date) {
 };
 
 // Function to take book info, create a Book object from it and add it to the books map
-function addBook(title, author, rating, status, pages, date) {
+function addBookToLibrary(title, author, rating, status, pages, date) {
     const book = new Book(title, author, rating, status, pages, date);
     books.set(book.id, book);
 };
+
+// Books added as default to test layout
+addBookToLibrary("Pride and Prejudice", "Jane Austen", 4, "read", 400, "14 Feb 2016");
+
+addBookToLibrary("Of Mice and Men", "John Steinbeck", 3.5, "read", 107, "4 Nov 2014");
+
+console.log(books);
