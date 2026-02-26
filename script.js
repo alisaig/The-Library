@@ -1,4 +1,5 @@
 // Map storing every book, using randomly generated ids as keys
+const headings = ["title", "author", "rating", "status", "pages", "date"];
 const books = new Map();
 
 // Book object 
@@ -24,4 +25,27 @@ addBookToLibrary("Pride and Prejudice", "Jane Austen", 4, "read", 400, "14 Feb 2
 
 addBookToLibrary("Of Mice and Men", "John Steinbeck", 3.5, "read", 107, "4 Nov 2014");
 
-console.log(books);
+
+function displayBooks() {
+    // Store the books container div in a variable, to add children to later
+    const booksContainer = document.getElementById("books-container");
+
+    console.log("books size:", books.size);
+    console.log("booksContainer:", booksContainer);
+
+    for (const book of books.values()) {
+        const bookRow = document.createElement("div");
+        bookRow.id = book.id;
+        bookRow.classList.add("book-row");
+
+        for (const heading of headings) {
+            const bookCell = document.createElement("div");
+            bookCell.textContent = book[heading];
+            bookRow.appendChild(bookCell)
+        };
+
+        booksContainer.appendChild(bookRow);
+    };
+};
+
+displayBooks();
