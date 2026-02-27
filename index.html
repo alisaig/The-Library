@@ -9,7 +9,13 @@
 </head>
 <body>
     <div>The Library</div>
-    <div><button>Add book button</button></div>
+    
+    <div><button command="show-modal" commandfor="add-book">Add book</button></div>
+    <dialog id="add-book">
+        <p>Testing testing</p>
+        <button command="close" commandfor="add-book">Submit</button>
+    </dialog>
+    
     <div class="books-list">
         <div class="headings">
             <div>Title</div>
