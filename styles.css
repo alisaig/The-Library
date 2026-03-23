@@ -35,6 +35,25 @@ dialog {
   margin: auto;
 }
 
+svg {
+  display: none;
+}
+
+.star {
+  width: 1.48em;
+  height: 1.48em;
+  fill: rgb(196, 196, 196);
+  display: inline-block;
+}
+
+.star.filled {
+  fill: rgb(255, 191, 0);
+}
+
+input[type="radio"] {
+  appearance: none;
+}
+
 .books-list {
     display: flex;
     flex-direction: column;
@@ -43,4 +62,9 @@ dialog {
 .headings, .book-row {
     display: grid;
     grid-template-columns: 2fr 2fr 1fr 1fr 1fr 1fr;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
 }

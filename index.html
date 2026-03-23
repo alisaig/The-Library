@@ -8,11 +8,63 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div>The Library</div>
+    <svg xmlns="http://www.w3.org/2000/svg">
+        <symbol id="star-icon" viewBox="0 0 24 24">
+            <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"/>
+        </symbol>
+    </svg>
     
+    <div>The Library</div>
+
     <div><button command="show-modal" commandfor="add-book">Add book</button></div>
     <dialog id="add-book">
         <p>Testing testing</p>
+        <form>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title">
+            <span></span>
+
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author">
+
+            <fieldset class="rating-group">
+                <legend class="rating">Rating:</legend>
+                
+                <label>
+                    <input type="radio" name="rating" value="1">
+                    <span><svg class="star"><use href="#star-icon"></use></svg></span>
+                </label>
+
+                <label>
+                    <input type="radio" name="rating" value="2">
+                    <span><svg class="star"><use href="#star-icon"></use></svg></span>
+                </label>
+
+                <label>
+                    <input type="radio" name="rating" value="3">
+                    <span><svg class="star"><use href="#star-icon"></use></svg></span>
+                </label>
+
+                <label>
+                    <input type="radio" name="rating" value="4">
+                    <span><svg class="star"><use href="#star-icon"></use></svg></span>
+                </label>
+
+                <label>
+                    <input type="radio" name="rating" value="5">
+                    <span><svg class="star"><use href="#star-icon"></use></svg></span>
+                </label>
+            </fieldset>
+
+            <label for="status">Status:</label>
+            ...
+
+            <label for="pages">Total pages:</label>
+            <input type="text" id="pages" name="pages">
+
+            <label for="date">Date read:</label>
+            ...
+        </form>
         <button command="close" commandfor="add-book">Submit</button>
     </dialog>
     

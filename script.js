@@ -49,3 +49,20 @@ function displayBooks() {
 };
 
 displayBooks();
+
+const ratingFields = document.querySelector(".rating-group");
+const stars = document.querySelectorAll(".star");
+
+console.log(stars);
+
+ratingFields.addEventListener("change", (event) => {
+    const rating = parseInt(event.target.value);
+
+    for (let i = 0; i < stars.length; i++) {
+        if (i < rating) {
+            stars[i].classList.add("filled");
+        } else {
+            stars[i].classList.remove("filled");
+        }
+    }
+})
