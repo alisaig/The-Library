@@ -27,6 +27,17 @@
             <label for="author">Author:</label>
             <input type="text" id="author" name="author">
 
+            <label for="pages">Total pages:</label>
+            <input type="text" id="pages" name="pages">
+
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="to-read">To-Read</option>
+                <option value="reading">Reading</option>
+                <option value="Read">Read</option>
+            </select>
+
+
             <fieldset class="rating-group">
                 <legend class="rating">Rating:</legend>
                 
@@ -56,14 +67,9 @@
                 </label>
             </fieldset>
 
-            <label for="status">Status:</label>
-            ...
-
-            <label for="pages">Total pages:</label>
-            <input type="text" id="pages" name="pages">
-
             <label for="date">Date read:</label>
-            ...
+            <input type="date" id="date" name="date-read">
+
         </form>
         <button command="close" commandfor="add-book">Submit</button>
     </dialog>

@@ -50,14 +50,15 @@ function displayBooks() {
 
 displayBooks();
 
+
+// Event listener to visually display rating in form when adding a new book
 const ratingFields = document.querySelector(".rating-group");
 const stars = document.querySelectorAll(".star");
-
-console.log(stars);
 
 ratingFields.addEventListener("change", (event) => {
     const rating = parseInt(event.target.value);
 
+    // Adds a .filled class to any svg star whose index matches or is lower than the rating
     for (let i = 0; i < stars.length; i++) {
         if (i < rating) {
             stars[i].classList.add("filled");
