@@ -51,8 +51,40 @@ function displayBooks() {
 displayBooks();
 
 
-// Event listener to visually display rating in form when adding a new book
+const statusField = document.querySelector("#status");
+const startDateField = document.querySelector("#start-date");
+const endDateField = document.querySelector("#end-date");
 const ratingFields = document.querySelector(".rating-group");
+
+// Update the form to only show certain fields depending on the value of status
+
+function statusDependentFormUpdate() {
+    const currentStatus = statusField.value;
+
+    switch(currentStatus) {
+        case "to-read":
+            startDateField.disabled = "true";
+            endDateField.disabled = "true";
+            ratingFields.disabled = "true";
+            break;
+        case "reading":
+            startDateField.disabled = "true";
+            endDateField.disabled = "false";
+            ratingFields.disabled = "true";
+            break;
+        case "read":
+            startDateField.disabled = "false";
+            endDateField.disabled = "false";
+            ratingFields.disabled = "false";
+            break;
+    }
+}
+
+statusDependentFormUpdate()
+
+statusField.addEventListener("change", statusDependentFormUpdate);
+
+// Event listener to visually display rating in form when adding a new book
 const stars = document.querySelectorAll(".star");
 
 ratingFields.addEventListener("change", (event) => {

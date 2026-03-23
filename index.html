@@ -34,9 +34,14 @@
             <select id="status" name="status">
                 <option value="to-read">To-Read</option>
                 <option value="reading">Reading</option>
-                <option value="Read">Read</option>
+                <option value="read">Read</option>
             </select>
 
+            <label for="start-date">Date started:</label>
+            <input type="date" id="start-date" name="start-date">
+
+            <label for="end-date">Date read:</label>
+            <input type="date" id="end-date" name="end-date">
 
             <fieldset class="rating-group">
                 <legend class="rating">Rating:</legend>
@@ -66,9 +71,6 @@
                     <span><svg class="star"><use href="#star-icon"></use></svg></span>
                 </label>
             </fieldset>
-
-            <label for="date">Date read:</label>
-            <input type="date" id="date" name="date-read">
 
         </form>
         <button command="close" commandfor="add-book">Submit</button>
