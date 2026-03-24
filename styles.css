@@ -42,7 +42,7 @@ svg {
 .star {
   width: 1.48em;
   height: 1.48em;
-  fill: rgb(196, 196, 196);
+  fill: rgb(115, 115, 115);
   display: inline-block;
 }
 
@@ -54,6 +54,10 @@ input[type="radio"] {
   appearance: none;
 }
 
+.rating-group:disabled .star {
+  opacity: 0.4;
+}
+
 .books-list {
     display: flex;
     flex-direction: column;
@@ -61,7 +65,7 @@ input[type="radio"] {
 
 .headings, .book-row {
     display: grid;
-    grid-template-columns: 2fr 2fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1.48fr 1.48fr 1fr 1fr 1.48fr 1.48fr 1fr;
 }
 
 form {
