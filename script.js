@@ -59,11 +59,14 @@ const ratingFields = document.querySelector(".rating-group");
 
 const stars = document.querySelectorAll(".star");
 
+// Visual reset of the stars representing the rating
 function starReset() {
     for (let i = 0; i < stars.length; i++) {
         stars[i].classList.remove("filled");
     }
 }
+
+
 
 // Update the form to only show certain fields depending on the value of status
 
@@ -75,6 +78,9 @@ function statusDependentFormUpdate() {
         case "to-read":
             startDateField.value = "";
             endDateField.value = "";
+            
+            const selectedRating = document.querySelector("input[name="rating"]:checked");
+            if (selectedRating) selectedRating.checked = false;
             starReset();
             
             startDateField.disabled = true;
