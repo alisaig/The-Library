@@ -19,35 +19,35 @@
     <div><button command="show-modal" commandfor="add-book">Add book</button></div>
     <dialog id="add-book">
         <p>Testing testing</p>
-        <form>
+        <form id="book-form">
             <label for="title">Title:</label>
-            <input type="text" id="title" name="title">
+            <input type="text" id="title" name="title" required>
             <span></span>
 
             <label for="author">Author:</label>
-            <input type="text" id="author" name="author">
+            <input type="text" id="author" name="author" required>
 
             <label for="pages">Total pages:</label>
-            <input type="text" id="pages" name="pages">
+            <input type="text" id="pages" name="pages" pattern="[0-9]+" required>
 
             <label for="status">Status:</label>
-            <select id="status" name="status">
+            <select id="status" name="status" required>
                 <option value="to-read">To-Read</option>
                 <option value="reading">Reading</option>
                 <option value="read">Read</option>
             </select>
 
             <label for="start-date">Date started:</label>
-            <input type="date" id="start-date" name="start-date">
+            <input type="date" id="start-date" name="start-date" required>
 
             <label for="end-date">Date read:</label>
-            <input type="date" id="end-date" name="end-date">
+            <input type="date" id="end-date" name="end-date" required>
 
             <fieldset class="rating-group">
                 <legend class="rating">Rating:</legend>
                 
                 <label>
-                    <input type="radio" name="rating" value="1">
+                    <input type="radio" name="rating" value="1" required>
                     <span><svg class="star"><use href="#star-icon"></use></svg></span>
                 </label>
 
@@ -72,8 +72,8 @@
                 </label>
             </fieldset>
 
+            <input type="submit" value="Submit">
         </form>
-        <button command="close" commandfor="add-book">Submit</button>
     </dialog>
     
     <div class="books-list">

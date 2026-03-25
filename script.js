@@ -10,6 +10,8 @@ function Book(title, author, pages, status, startDate, endDate, rating) {
     this.status = status;
     this.startDate = startDate;
     this.endDate = endDate;
+    // There may not be a rating field included in the form submission
+    // If statement to avoid error from running function on falsy value
     this.rating = rating;
     // Generate random id unique to each book
     this.id = crypto.randomUUID();
@@ -24,8 +26,23 @@ function addBookToLibrary(title, author, pages, status, startDate, endDate, rati
 // Books added as default to test layout
 addBookToLibrary("Pride and Prejudice", "Jane Austen", 400, "read", "14 Feb 2016", "7 Mar 2016", 4);
 
-addBookToLibrary("Of Mice and Men", "John Steinbeck", 107, "read", "4 Nov 2014", "26 Nov 2014", 3.5);
+addBookToLibrary("Of Mice and Men", "John Steinbeck", 107, "read", "4 Nov 2014", "26 Nov 2014", 3);
 
+function displayBookRating(rating, container) {
+    for (let i = 0; i < 5; i++) {
+        const span = document.createElement("span");
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+
+        svg.classList.add("star");
+        if (i < rating) svg.classList.add("filled");
+        use.setAttribute("href", "#star-icon");
+
+        svg.appendChild(use);
+        span.appendChild(svg);
+        container.appendChild(span);
+    }
+}
 
 function displayBooks() {
     // Store the books container div in a variable, to add children to later
@@ -41,8 +58,13 @@ function displayBooks() {
 
         for (const heading of headings) {
             const bookCell = document.createElement("div");
-            bookCell.textContent = book[heading];
-            bookRow.appendChild(bookCell)
+            if (heading == "rating") {
+                displayBookRating(book.rating, bookCell);
+            } else {
+                bookCell.textContent = book[heading];
+            }
+            // bookCell.textContent = book[heading];
+            bookRow.appendChild(bookCell);
         };
 
         booksContainer.appendChild(bookRow);
@@ -57,7 +79,7 @@ const startDateField = document.querySelector("#start-date");
 const endDateField = document.querySelector("#end-date");
 const ratingFields = document.querySelector(".rating-group");
 
-const stars = document.querySelectorAll(".star");
+const stars = ratingFields.querySelectorAll(".star");
 
 // Visual reset of the stars representing the rating
 function starReset() {
@@ -65,8 +87,6 @@ function starReset() {
         stars[i].classList.remove("filled");
     }
 }
-
-
 
 // Update the form to only show certain fields depending on the value of status
 
@@ -79,7 +99,7 @@ function statusDependentFormUpdate() {
             startDateField.value = "";
             endDateField.value = "";
             
-            const selectedRating = document.querySelector("input[name="rating"]:checked");
+            const selectedRating = document.querySelector("input[name='rating']:checked");
             if (selectedRating) selectedRating.checked = false;
             starReset();
             
@@ -89,6 +109,8 @@ function statusDependentFormUpdate() {
             break;
 
         case "reading":
+            endDateField.value = "";
+            
             startDateField.disabled = false;
             endDateField.disabled = true;
             ratingFields.disabled = false;
@@ -121,3 +143,43 @@ ratingFields.addEventListener("change", (event) => {
         }
     }
 })
+
+const bookForm = document.querySelector("#book-form");
+
+function handleBookSubmit(event) {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+
+    // Add form field values that don't get disabled at any point to an array
+    const permanentFields = [
+        formData.get("title"),
+        formData.get("author"),
+        formData.get("pages"),
+        formData.get("status")
+    ]
+
+    // These form fields can get disabled when filling form
+    // So need to ensure their values are either the expected ones or null
+    let startDate = formData.get("start-date") || null;
+    let endDate = formData.get("end-date") || null;
+    let rating = formData.get("rating") ? parseInt(formData.get("rating")) : null;
+
+    // Another check to ensure values are as expected according to status
+    switch(formData.get("status")) {
+        // Want first case to fall through so endDate is also null
+        case "to-read":
+            startDate = null;
+            rating = null;
+        case "reading":
+            endDate = null;
+        case "read":
+            break;
+    }
+
+    // Create new book object, using spread syntax for first 4 arguments
+    addBookToLibrary(...permanentFields, startDate, endDate, rating);
+    displayBooks();
+}
+
+bookForm.addEventListener("submit", handleBookSubmit);
