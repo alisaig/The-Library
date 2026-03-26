@@ -80,10 +80,12 @@ function displayBooks() {
         const actionCell = document.createElement("div");
 
         const editButton = document.createElement("button");
+        editButton.classList.add("edit-button");
         editButton.innerHTML = "Edit";
         actionCell.appendChild(editButton);
 
         const removeButton = document.createElement("button");
+        removeButton.classList.add("remove-button");
         removeButton.innerHTML = "Remove";
         actionCell.appendChild(removeButton);
 
@@ -207,3 +209,4 @@ function handleBookSubmit(event) {
 }
 
 bookForm.addEventListener("submit", handleBookSubmit);
+
