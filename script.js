@@ -44,9 +44,12 @@ function displayBookRating(rating, container) {
     }
 }
 
+// Store the books container div in a variable, to add children to later
+const booksContainer = document.getElementById("books-container");
+
 function displayBooks() {
-    // Store the books container div in a variable, to add children to later
-    const booksContainer = document.getElementById("books-container");
+    // // Store the books container div in a variable, to add children to later
+    // const booksContainer = document.getElementById("books-container");
 
     booksContainer.innerHTML = "";
 
@@ -203,10 +206,21 @@ function handleBookSubmit(event) {
 
     // Create new book object, using spread syntax for first 4 arguments
     addBookToLibrary(...permanentFields, startDate, endDate, rating);
-
     
     displayBooks();
+    formDialog.close();
+    bookForm.reset();
 }
 
 bookForm.addEventListener("submit", handleBookSubmit);
 
+const closeDialogButton = document.querySelector("#dialog-close");
+const formDialog = document.querySelector("#add-book");
+
+closeDialogButton.addEventListener("click", () => {
+    formDialog.close();
+    bookForm.reset();
+})
+
+
+// function editForm()
