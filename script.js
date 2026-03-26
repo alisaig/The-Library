@@ -24,9 +24,9 @@ function addBookToLibrary(title, author, pages, status, startDate, endDate, rati
 };
 
 // Books added as default to test layout
-addBookToLibrary("Pride and Prejudice", "Jane Austen", 400, "read", "14 Feb 2016", "7 Mar 2016", 4);
+addBookToLibrary("Pride and Prejudice", "Jane Austen", 400, "read", new Date("2016-02-14"), new Date("2016-03-07"), 4);
 
-addBookToLibrary("Of Mice and Men", "John Steinbeck", 107, "read", "4 Nov 2014", "26 Nov 2014", 3);
+addBookToLibrary("Of Mice and Men", "John Steinbeck", 107, "read", new Date("2014-11-04"), new Date("2014-11-26"), 3);
 
 function displayBookRating(rating, container) {
     for (let i = 0; i < 5; i++) {
@@ -62,6 +62,17 @@ function displayBooks() {
             const bookCell = document.createElement("div");
             if (heading == "rating") {
                 displayBookRating(book.rating, bookCell);
+            } else if (heading == "startDate" || heading == "endDate") {
+                if (book[heading] == null) {
+                    bookCell.textContent = "N/A";
+                } else {
+                    const formattedDate = new Intl.DateTimeFormat("en-GB", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric"
+                    }).format(book[heading]);
+                    bookCell.textContent = formattedDate
+                };
             } else {
                 bookCell.textContent = book[heading];
             }
