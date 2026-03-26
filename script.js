@@ -48,6 +48,8 @@ function displayBooks() {
     // Store the books container div in a variable, to add children to later
     const booksContainer = document.getElementById("books-container");
 
+    booksContainer.innerHTML = "";
+
     console.log("books size:", books.size);
     console.log("booksContainer:", booksContainer);
 
@@ -179,6 +181,8 @@ function handleBookSubmit(event) {
 
     // Create new book object, using spread syntax for first 4 arguments
     addBookToLibrary(...permanentFields, startDate, endDate, rating);
+
+    
     displayBooks();
 }
 
