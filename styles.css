@@ -65,7 +65,7 @@ input[type="radio"] {
 
 .headings, .book-row {
     display: grid;
-    grid-template-columns: 1.48fr 1.48fr 1fr 1fr 1.48fr 1.48fr 1fr;
+    grid-template-columns: 1.48fr 1.48fr 1fr 1fr 1.48fr 1.48fr 1.48fr 1fr;
 }
 
 form {

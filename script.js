@@ -50,9 +50,6 @@ function displayBooks() {
 
     booksContainer.innerHTML = "";
 
-    console.log("books size:", books.size);
-    console.log("booksContainer:", booksContainer);
-
     for (const book of books.values()) {
         const bookRow = document.createElement("div");
         bookRow.id = book.id;
@@ -76,9 +73,21 @@ function displayBooks() {
             } else {
                 bookCell.textContent = book[heading];
             }
-            // bookCell.textContent = book[heading];
+
             bookRow.appendChild(bookCell);
         };
+
+        const actionCell = document.createElement("div");
+
+        const editButton = document.createElement("button");
+        editButton.innerHTML = "Edit";
+        actionCell.appendChild(editButton);
+
+        const removeButton = document.createElement("button");
+        removeButton.innerHTML = "Remove";
+        actionCell.appendChild(removeButton);
+
+        bookRow.appendChild(actionCell);
 
         booksContainer.appendChild(bookRow);
     };
