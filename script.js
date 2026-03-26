@@ -163,8 +163,8 @@ function handleBookSubmit(event) {
 
     // These form fields can get disabled when filling form
     // So need to ensure their values are either the expected ones or null
-    let startDate = formData.get("start-date") || null;
-    let endDate = formData.get("end-date") || null;
+    let startDate = formData.get("start-date") ? new Date(formData.get("start-date")) : null;
+    let endDate = formData.get("end-date") ? new Date(formData.get("start-date")) : null;
     let rating = formData.get("rating") ? parseInt(formData.get("rating")) : null;
 
     // Another check to ensure values are as expected according to status
