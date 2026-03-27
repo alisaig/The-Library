@@ -15,20 +15,19 @@ function Book(title, author, pages, status, startDate, endDate, rating) {
     // There may not be a rating field included in the form submission
     // If statement to avoid error from running function on falsy value
     this.rating = rating;
-    // Generate random id unique to each book
-    this.id = crypto.randomUUID();
 };
 
 // Function to take book info, create a Book object from it and add it to the books map
 function addBookToLibrary(title, author, pages, status, startDate, endDate, rating) {
     const book = new Book(title, author, pages, status, startDate, endDate, rating);
-    books.set(book.id, book);
+    // Generate random id unique to each book
+    books.set(crypto.randomUUID(), book);
 };
 
 // Books added as default to test layout
-addBookToLibrary("Pride and Prejudice", "Jane Austen", 400, "read", "2016-02-14", "2016-03-07", 4);
+addBookToLibrary("Pride and Prejudice", "Jane Austen", "400", "read", "2016-02-14", "2016-03-07", 4);
 
-addBookToLibrary("Of Mice and Men", "John Steinbeck", 107, "read", "2014-11-04", "2014-11-26", 3);
+addBookToLibrary("Of Mice and Men", "John Steinbeck", "107", "read", "2014-11-04", "2014-11-26", 3);
 
 function displayBookRating(rating, container) {
     for (let i = 0; i < 5; i++) {
@@ -53,9 +52,10 @@ function displayBooks() {
     // Reset container so previously displayed books aren't displayed multiple times
     booksContainer.innerHTML = "";
 
-    for (const book of books.values()) {
+    // for (const book of books.values()) {
+    for (let [bookId, book] of books) {
         const bookRow = document.createElement("div");
-        bookRow.id = book.id;
+        bookRow.id = bookId;
         bookRow.classList.add("book-row");
 
         for (const heading of headings) {
@@ -167,11 +167,11 @@ ratingFields.addEventListener("change", (event) => {
 
 function renderStars(rating) {
     // Value of form element is a string so need to transform it to a number
-    parsedRating = parseInt(rating);
+    const parsedRating = parseInt(rating);
 
     // Adds a .filled class to any svg star whose index matches or is lower than the rating
     for (let i = 0; i < stars.length; i++) {
-        if (i < rating) {
+        if (i < parsedRating) {
             stars[i].classList.add("filled");
         } else {
             stars[i].classList.remove("filled");
@@ -199,7 +199,7 @@ function handleBookSubmit(event) {
     // These form fields can get disabled when filling form
     // So need to ensure their values are either the expected ones or null
     let startDate = formData.get("start-date") ? formData.get("start-date") : null;
-    let endDate = formData.get("end-date") ? formData.get("start-date") : null;
+    let endDate = formData.get("end-date") ? formData.get("end-date") : null;
     let rating = formData.get("rating") ? parseInt(formData.get("rating")) : null;
 
     // Another check to ensure values are as expected according to status
@@ -229,10 +229,10 @@ function handleBookSubmit(event) {
         addBookToLibrary(...permanentFields, startDate, endDate, rating);
     }
     
-    displayBooks();
     formDialog.close();
     bookForm.reset();
     extraResets();
+    displayBooks();
 
     editingBookId = null;
 }
@@ -246,13 +246,14 @@ closeDialogButton.addEventListener("click", () => {
     formDialog.close();
     bookForm.reset();
     extraResets();
+    editingBookId = null;
 })
 
 booksContainer.addEventListener("click", (event) => {
     const target = event.target;
     if (target.classList.contains("edit-button")) {
         const buttonRow = target.closest(".book-row")
-        let editingBookId = buttonRow.id;
+        editingBookId = buttonRow.id;
 
         const bookToEdit = books.get(editingBookId);
 
@@ -271,7 +272,7 @@ function editForm(book) {
     endDateField.value = book.endDate || "";
 
     for (const radio of ratingButtons) {
-        if (radio.value === book.rating) {
+        if (radio.value == book.rating) {
             radio.checked = true;
         } else {
             radio.checked = false;
