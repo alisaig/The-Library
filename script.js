@@ -1,4 +1,4 @@
-let editingBookId = "";
+let editingBookId = null;
 
 // Map storing every book, using randomly generated ids as keys
 const headings = ["title", "author", "pages", "status", "startDate", "endDate", "rating"];
@@ -26,9 +26,9 @@ function addBookToLibrary(title, author, pages, status, startDate, endDate, rati
 };
 
 // Books added as default to test layout
-addBookToLibrary("Pride and Prejudice", "Jane Austen", 400, "read", new Date("2016-02-14"), new Date("2016-03-07"), 4);
+addBookToLibrary("Pride and Prejudice", "Jane Austen", 400, "read", "2016-02-14", "2016-03-07", 4);
 
-addBookToLibrary("Of Mice and Men", "John Steinbeck", 107, "read", new Date("2014-11-04"), new Date("2014-11-26"), 3);
+addBookToLibrary("Of Mice and Men", "John Steinbeck", 107, "read", "2014-11-04", "2014-11-26", 3);
 
 function displayBookRating(rating, container) {
     for (let i = 0; i < 5; i++) {
@@ -214,13 +214,27 @@ function handleBookSubmit(event) {
             break;
     }
 
-    // Create new book object, using spread syntax for first 4 arguments
-    addBookToLibrary(...permanentFields, startDate, endDate, rating);
+    if (editingBookId) {
+        const currentBook = books.get(editingBookId);
+
+        currentBook.title = formData.get("title");
+        currentBook.author = formData.get("author");
+        currentBook.pages = formData.get("pages");
+        currentBook.status = formData.get("status");
+        currentBook.startDate = startDate;
+        currentBook.endDate = endDate;
+        currentBook.rating = rating;
+    } else {
+        // Create new book object, using spread syntax for first 4 arguments
+        addBookToLibrary(...permanentFields, startDate, endDate, rating);
+    }
     
     displayBooks();
     formDialog.close();
     bookForm.reset();
     extraResets();
+
+    editingBookId = null;
 }
 
 bookForm.addEventListener("submit", handleBookSubmit);
