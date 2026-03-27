@@ -66,13 +66,14 @@ function displayBooks() {
                 if (book[heading] == null) {
                     bookCell.textContent = "N/A";
                 } else {
+                    const date = new Date(book[heading]);
                     const formattedDate = new Intl.DateTimeFormat("en-GB", {
                         day: "numeric",
                         month: "short",
                         year: "numeric"
-                    }).format(book[heading]);
-                    bookCell.textContent = formattedDate
-                };
+                    }).format(date);
+                    bookCell.textContent = formattedDate;
+                }
             } else {
                 bookCell.textContent = book[heading];
             }
@@ -107,6 +108,7 @@ const statusField = document.querySelector("#status");
 const startDateField = document.querySelector("#start-date");
 const endDateField = document.querySelector("#end-date");
 const ratingFields = document.querySelector(".rating-group");
+const ratingButtons = document.querySelectorAll(".rating-group input[type='radio']");
 
 const stars = ratingFields.querySelectorAll(".star");
 
@@ -158,21 +160,7 @@ statusDependentFormUpdate()
 
 statusField.addEventListener("change", statusDependentFormUpdate);
 
-// Event listener to visually display rating in form when adding a new book
-
-// ratingFields.addEventListener("change", (event) => {
-//     const rating = parseInt(event.target.value);
-
-//     // Adds a .filled class to any svg star whose index matches or is lower than the rating
-//     for (let i = 0; i < stars.length; i++) {
-//         if (i < rating) {
-//             stars[i].classList.add("filled");
-//         } else {
-//             stars[i].classList.remove("filled");
-//         }
-//     }
-// })
-
+// Event listener to visually display rating using filled stars when a star is clicked
 ratingFields.addEventListener("change", (event) => {
     renderStars(event.target.value);
 })
@@ -210,8 +198,8 @@ function handleBookSubmit(event) {
 
     // These form fields can get disabled when filling form
     // So need to ensure their values are either the expected ones or null
-    let startDate = formData.get("start-date") ? new Date(formData.get("start-date")) : null;
-    let endDate = formData.get("end-date") ? new Date(formData.get("start-date")) : null;
+    let startDate = formData.get("start-date") ? formData.get("start-date") : null;
+    let endDate = formData.get("end-date") ? formData.get("start-date") : null;
     let rating = formData.get("rating") ? parseInt(formData.get("rating")) : null;
 
     // Another check to ensure values are as expected according to status
@@ -267,7 +255,17 @@ function editForm(book) {
     statusField.value = book.status;
     startDateField.value = book.startDate || "";
     endDateField.value = book.endDate || "";
-    ratingFields.value = book.rating || "";
+
+    for (const radio of ratingButtons) {
+        if (radio.value === book.rating) {
+            radio.checked = true;
+        } else {
+            radio.checked = false;
+        }
+    }
+
+    renderStars(book.rating);
+    statusDependentFormUpdate();
 };
 
 function extraResets() {
