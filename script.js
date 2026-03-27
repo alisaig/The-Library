@@ -1,3 +1,5 @@
+let editingBookId = "";
+
 // Map storing every book, using randomly generated ids as keys
 const headings = ["title", "author", "pages", "status", "startDate", "endDate", "rating"];
 const books = new Map();
@@ -48,9 +50,7 @@ function displayBookRating(rating, container) {
 const booksContainer = document.getElementById("books-container");
 
 function displayBooks() {
-    // // Store the books container div in a variable, to add children to later
-    // const booksContainer = document.getElementById("books-container");
-
+    // Reset container so previously displayed books aren't displayed multiple times
     booksContainer.innerHTML = "";
 
     for (const book of books.values()) {
@@ -100,7 +100,9 @@ function displayBooks() {
 
 displayBooks();
 
-
+const titleField = document.querySelector("#title");
+const authorField = document.querySelector("#author");
+const pagesField = document.querySelector("#pages");
 const statusField = document.querySelector("#status");
 const startDateField = document.querySelector("#start-date");
 const endDateField = document.querySelector("#end-date");
@@ -222,5 +224,26 @@ closeDialogButton.addEventListener("click", () => {
     bookForm.reset();
 })
 
+booksContainer.addEventListener("click", (event) => {
+    const target = event.target;
+    if (target.classList.contains("edit-button")) {
+        const buttonRow = target.closest(".book-row")
+        let editingBookId = buttonRow.id;
 
-// function editForm()
+        const bookToEdit = books.get(editingBookId);
+
+        editForm(bookToEdit);
+    }
+});
+
+function editForm(book) {
+    formDialog.showModal();
+
+    titleField.value = book.title;
+    authorField.value = book.author;
+    pagesField.value = book.pages;
+    statusField.value = book.status;
+    startDateField.value = book.startDate || "";
+    endDateField.value = book.endDate || "";
+    ratingFields.value = book.rating || "";
+};
