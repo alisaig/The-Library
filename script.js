@@ -160,8 +160,26 @@ statusField.addEventListener("change", statusDependentFormUpdate);
 
 // Event listener to visually display rating in form when adding a new book
 
+// ratingFields.addEventListener("change", (event) => {
+//     const rating = parseInt(event.target.value);
+
+//     // Adds a .filled class to any svg star whose index matches or is lower than the rating
+//     for (let i = 0; i < stars.length; i++) {
+//         if (i < rating) {
+//             stars[i].classList.add("filled");
+//         } else {
+//             stars[i].classList.remove("filled");
+//         }
+//     }
+// })
+
 ratingFields.addEventListener("change", (event) => {
-    const rating = parseInt(event.target.value);
+    renderStars(event.target.value);
+})
+
+function renderStars(rating) {
+    // Value of form element is a string so need to transform it to a number
+    parsedRating = parseInt(rating);
 
     // Adds a .filled class to any svg star whose index matches or is lower than the rating
     for (let i = 0; i < stars.length; i++) {
@@ -171,7 +189,9 @@ ratingFields.addEventListener("change", (event) => {
             stars[i].classList.remove("filled");
         }
     }
-})
+}
+
+
 
 const bookForm = document.querySelector("#book-form");
 
@@ -212,6 +232,7 @@ function handleBookSubmit(event) {
     displayBooks();
     formDialog.close();
     bookForm.reset();
+    extraResets();
 }
 
 bookForm.addEventListener("submit", handleBookSubmit);
@@ -222,6 +243,7 @@ const formDialog = document.querySelector("#add-book");
 closeDialogButton.addEventListener("click", () => {
     formDialog.close();
     bookForm.reset();
+    extraResets();
 })
 
 booksContainer.addEventListener("click", (event) => {
@@ -247,3 +269,9 @@ function editForm(book) {
     endDateField.value = book.endDate || "";
     ratingFields.value = book.rating || "";
 };
+
+function extraResets() {
+    starReset();
+    statusField.value = "to-read";
+    statusDependentFormUpdate();
+}
