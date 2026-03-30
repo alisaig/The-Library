@@ -16,10 +16,10 @@
     
     <div>The Library</div>
 
-    <div><button command="show-modal" commandfor="add-book">Add book</button></div>
+    <div><button command="show-modal" commandfor="add-book" id="add-button">Add book</button></div>
     <dialog id="add-book">
         <button type=button id="dialog-close">X</button>
-        <p>Testing testing</p>
+        <p id="form-title">New Book</p>
         <form id="book-form">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" required>

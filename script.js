@@ -110,7 +110,10 @@ function displayBooks() {
 displayBooks();
 
 // Assign all relevant DOM elements to a variable for use in this file
+const addBookButton = document.querySelector("#add-button");
+
 const bookForm = document.querySelector("#book-form");
+const formTitle = document.querySelector("#form-title");
 
 const titleField = document.querySelector("#title");
 const authorField = document.querySelector("#author");
@@ -312,6 +315,9 @@ booksContainer.addEventListener("click", (event) => {
 
 // Function that opens form and fills in all the fieldsets with values from the book's properties
 function editForm(book) {
+    // Appropriately change title of form when editing existing book
+    formTitle.textContent = "Edit Book";
+
     // Opens dialog containing the form
     formDialog.showModal();
 
@@ -352,4 +358,10 @@ document.addEventListener("click", (event) => {
     if (!bookForm.contains(event.target)) {
         dialogClose();
     }
+})
+
+// Appropriately change title of form when adding new book
+addBookButton.addEventListener("click", (event) => {
+    editingBookId = null;
+    formTitle.textContent = "New Book";
 })
