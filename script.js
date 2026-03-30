@@ -274,7 +274,7 @@ closeDialogButton.addEventListener("click", () => {
     editingBookId = null;
 })
 
-// Event delegation to detect which child (book) was selected for editing
+// Event delegation to detect which child (book) was selected for editing or removing
 booksContainer.addEventListener("click", (event) => {
     const target = event.target;
     // Check if it was an edit button that was clicked
@@ -289,6 +289,19 @@ booksContainer.addEventListener("click", (event) => {
 
         // Function to open form to edit
         editForm(bookToEdit);
+    }
+
+    // Check if it was a remove button that was clicked
+    if (target.classList.contains("remove-button")) {
+        // Retrieve book's id from row's id attribute and assign it to bookId
+        const buttonRow = target.closest(".book-row")
+        bookId = buttonRow.id;
+
+        // Delete the bookId and book key value pair
+        books.delete(bookId);
+
+        // Reload book UI to reflect the book being gone 
+        displayBooks();
     }
 });
 
@@ -328,3 +341,4 @@ function extraResets() {
     // Disable any fields associated with the above default
     statusDependentFormUpdate();
 }
+
