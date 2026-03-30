@@ -249,15 +249,10 @@ function handleBookSubmit(event) {
     }
     
     // Close form properly and reset everything properly
-    formDialog.close();
-    bookForm.reset();
-    extraResets();
+    dialogClose();
 
     // Re-display books to show new entries/changes to existing entries
     displayBooks();
-
-    // Reset form to default add new book mode
-    editingBookId = null;
 }
 
 // Run handle function when submit button is clicked
