@@ -267,12 +267,14 @@ const formDialog = document.querySelector("#add-book");
 // !!!!!!!!!!!!!!!
 // Could probably make this into a general closing function to also add to handle submit
 // !!!!!!!!!!!!!!!
-closeDialogButton.addEventListener("click", () => {
+closeDialogButton.addEventListener("click", dialogClose)
+
+function dialogClose() {
     formDialog.close();
     bookForm.reset();
     extraResets();
     editingBookId = null;
-})
+}
 
 // Event delegation to detect which child (book) was selected for editing or removing
 booksContainer.addEventListener("click", (event) => {
@@ -342,3 +344,10 @@ function extraResets() {
     statusDependentFormUpdate();
 }
 
+document.addEventListener("click", (event) => {
+    if (!bookForm.contains(event.target)) {
+        dialogClose();
+    }
+})
+
+// event.target != formDialog && 
