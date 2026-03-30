@@ -291,6 +291,9 @@ booksContainer.addEventListener("click", (event) => {
 
         // Function to open form to edit
         editForm(bookToEdit);
+
+        // Stop the later event listener that closes the dialog from running
+        event.stopPropagation()
     }
 
     // Check if it was a remove button that was clicked
@@ -344,10 +347,9 @@ function extraResets() {
     statusDependentFormUpdate();
 }
 
+// Allow form to close by also clicking outside it
 document.addEventListener("click", (event) => {
     if (!bookForm.contains(event.target)) {
         dialogClose();
     }
 })
-
-// event.target != formDialog && 
