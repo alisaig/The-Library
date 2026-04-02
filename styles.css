@@ -1,3 +1,18 @@
+/* Import Playfair Display font */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+
+/* Global variables */
+
+:root {
+  --grayColor: rgb(142, 142, 142);
+  --navyColor: rgb(28, 28, 87);
+  --lightGold: rgb(243, 224, 143);
+  --darkGold: rgb(186, 138, 24);
+}
+
+
 /* Reset (referenced from Josh Comeau) */
 
 *, *::before, *::after {
@@ -29,25 +44,39 @@ h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
 }
 
+
 /* Main styles */
+
+body {
+  background-image: url("images/paper_texture_bg.jpg");
+  background-size: cover;
+  font-family: "Playfair Display", serif;
+}
+
+button {
+  background-color: rgb(47, 45, 95);
+}
+
+#main-title {
+  font-size: 1.72rem;
+  margin: auto;
+  text-align: center;
+  padding: 1rem;
+}
 
 dialog {
   margin: auto;
 }
 
-svg {
-  display: none;
-}
-
 .star {
   width: 1.48em;
   height: 1.48em;
-  fill: rgb(115, 115, 115);
+  fill: var(--grayColor);
   display: inline-block;
 }
 
 .star.filled {
-  fill: rgb(255, 191, 0);
+  fill: url(#grad3);
 }
 
 input[type="radio"] {
