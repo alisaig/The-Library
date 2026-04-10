@@ -358,5 +358,5 @@ document.addEventListener("click", (event) => {
 // Appropriately change title of form when adding new book
 addBookButton.addEventListener("click", (event) => {
     editingBookId = null;
-    formTitle.textContent = "New Book";
+    formTitle.textContent = "Add a new book";
 })
