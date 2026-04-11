@@ -88,6 +88,7 @@ function displayBooks() {
 
         // Create cell to store edit and remove buttons
         const actionCell = document.createElement("div");
+        actionCell.classList.add("actions");
 
         const editButton = document.createElement("button");
         editButton.classList.add("edit-button");

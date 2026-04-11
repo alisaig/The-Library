@@ -58,19 +58,19 @@ body {
   color: var(--navy);
 }
 
-.main {
+/* .main {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 0 1.72em;
+  align-items: stretch;
+  margin: 0 1em;
   gap: 1em;
-}
+} */
 
 button {
   background: var(--navyGradient);
   color: white;
-  padding: 0.24rem 1.6rem;
   border: none;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #main-title {
@@ -80,16 +80,27 @@ button {
   text-align: center;
   padding-top: 0.72em;
   line-height: 1;
-  /* text-decoration: underline 0.12rem; */
 }
 
 #title-container {
-  margin: 0 1.6em 1.2em 1.6em;
+  width: min(300px, 90%);
+  margin: 0 auto 1.2em auto;
   border-bottom: solid 2px;
 }
 
-#add-book {
-  margin-bottom: 90px;
+#add-button {
+  padding: 0.36rem 1.6rem;
+}
+
+#add-button:active {
+    box-shadow: none;
+    transform: translateY(2px);
+}
+
+#addb-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
 }
 
 #form-title {
@@ -139,27 +150,41 @@ input[type="radio"] {
 #books-container {
   display: flex;
   flex-direction: column;
-  gap: 0.6em;
+  gap: 0.2em;
   margin-top: 0.36em;
 }
 
 .books-list {
-  font-size: 1.08rem;
+  font-size: 0.86rem;
   display: flex;
   flex-direction: column;
+  margin: 0 2em;
 }
 
 .headings, .book-row {
-    display: grid;
-    grid-template-columns: 1.48fr 1.48fr 0.6fr 0.72fr 0.86fr 0.86fr 1.2fr 1.6fr;
+  display: grid;
+  grid-template-columns: 1.48fr 1.48fr 0.6fr 0.6fr 0.86fr 0.86fr 1.2fr 1.72fr;
+  gap: 0.6em;
+  padding: 0.2em 0.4em;
 }
 
 .headings {
   font-weight: bold;
-  border-bottom: solid 2px;
+  margin-bottom: 0.6em;
+  border-bottom: solid 2px var(--navy);
+}
+
+.book-row:hover {
+  background-color: rgb(228, 226, 220);
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .edit-button, .remove-button {
-  margin: 0 0.12rem;
-  font-size: 1rem;
+  font-size: 0.72rem;
+  padding: 0.24rem 1.24rem;
 }
