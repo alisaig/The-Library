@@ -103,7 +103,15 @@ button {
   margin-bottom: 1em;
 }
 
+#add-book {
+  position: relative;
+  padding: 0 2em 1.6em 2em;
+  margin: auto;
+  margin-top: 4em;
+}
+
 #form-title {
+  position: relative;
   margin: 1em;
   text-align: center;
   font-weight: bolder;
@@ -118,8 +126,26 @@ form {
 
 #dialog-close {
   color: var(--navy);
-  background-color: white;
+  background: transparent;
+  width: 24px;
+  height: auto;
   border: none;
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  padding: 2px;
+  box-shadow: none;
+}
+
+#dialog-close:hover {
+  background: rgb(216, 216, 216)
+}
+
+#submit {
+  color: white;
+  background: var(--navyGradient);
+  border: none;
+  padding: 4px;
 }
 
 .field {
