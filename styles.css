@@ -7,11 +7,14 @@
 
 /* Global variables */
 
+/* Variables for colors to keep them consistent */
 :root {
   --gray: rgb(142, 142, 142);
   --navy: rgb(50, 62, 95);
   --lightNavy: rgb(63, 80, 107);
+  --darkNavy: rgb(43, 46, 77);
   --navyGradient: linear-gradient(to bottom, var(--navy), var(--lightNavy));
+  --darkGradient: linear-gradient(to bottom, var(--darkNavy), var(--navy));
   --lightGold: rgb(243, 224, 143);
   --darkGold: rgb(186, 138, 24);
 }
@@ -53,18 +56,9 @@ h1, h2, h3, h4, h5, h6 {
 
 body {
   background-image: url("images/texturedbg.png");
-  /* background-size: cover; */
   font-family: "Playfair Display", serif;
   color: var(--navy);
 }
-
-/* .main {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  margin: 0 1em;
-  gap: 1em;
-} */
 
 button {
   background: var(--navyGradient);
@@ -82,14 +76,20 @@ button {
   line-height: 1;
 }
 
+/* Container for title to control how wide the underline beneath it is */
 #title-container {
   width: min(300px, 90%);
   margin: 0 auto 1.2em auto;
   border-bottom: solid 2px;
 }
 
+/* Add feedback for hovering over and clicking button */
 #add-button {
   padding: 0.36rem 1.6rem;
+}
+
+#add-button:hover {
+  background: var(--darkGradient);
 }
 
 #add-button:active {
@@ -103,15 +103,17 @@ button {
   margin-bottom: 1em;
 }
 
+/* Set position of dialog to relative to later control close button position */
 #add-book {
+  color: var(--navy);
   position: relative;
   padding: 0 2em 1.6em 2em;
   margin: auto;
   margin-top: 4em;
+  border: solid 1px var(--navy);
 }
 
 #form-title {
-  position: relative;
   margin: 1em;
   text-align: center;
   font-weight: bolder;
@@ -124,6 +126,7 @@ form {
   gap: 0.72em;
 }
 
+/* Set button position to absolute to place it in upper right corner */
 #dialog-close {
   color: var(--navy);
   background: transparent;
@@ -137,6 +140,7 @@ form {
   box-shadow: none;
 }
 
+/* Visible feedback for hovering over button */
 #dialog-close:hover {
   background: rgb(216, 216, 216)
 }
@@ -148,12 +152,19 @@ form {
   padding: 4px;
 }
 
+/* Visible feedback for hovering over button */
+#submit:hover {
+  background: var(--darkGradient);
+}
+
+/* Space-between to make form layout more neat (Titles on left, inputs on right) */
 .field {
   display: flex;
   justify-content: space-between;
   gap: 1em;
 }
 
+/* Star (radio button) styles for when they're unselected */
 .star {
   width: 1.48em;
   height: 1.48em;
@@ -161,14 +172,17 @@ form {
   display: inline-block;
 }
 
+/* Star (and all stars behind it) become filled when selected */
 .star.filled {
   fill: url(#grad3);
 }
 
+/* Remove standard button appearance to replace with star svgs */
 input[type="radio"] {
   appearance: none;
 }
 
+/* Since native styling is disabled above, have to add it back to stars manually */
 .rating-group:disabled .star {
   opacity: 0.4;
 }
@@ -181,15 +195,16 @@ input[type="radio"] {
 }
 
 .books-list {
-  font-size: 0.86rem;
+  font-size: 0.96rem;
   display: flex;
   flex-direction: column;
   margin: 0 2em;
 }
 
+/* Each row is a grid to ensure spacings of columns stay consistent between them */
 .headings, .book-row {
   display: grid;
-  grid-template-columns: 1.48fr 1.48fr 0.6fr 0.6fr 0.86fr 0.86fr 1.2fr 1.72fr;
+  grid-template-columns: 1.48fr 1.48fr 0.72fr 0.72fr 0.86fr 0.86fr 1.2fr 1.6fr;
   gap: 0.6em;
   padding: 0.2em 0.4em;
 }
@@ -200,17 +215,28 @@ input[type="radio"] {
   border-bottom: solid 2px var(--navy);
 }
 
+/* Add visual feedback for hovering over a row */
 .book-row:hover {
   background-color: rgb(228, 226, 220);
 }
 
 .actions {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .edit-button, .remove-button {
-  font-size: 0.72rem;
-  padding: 0.24rem 1.24rem;
+  font-size: 0.86rem;
+  padding: 0.24rem 1.36rem;
+}
+
+/* Add feedback for hovering over and clicking button */
+.edit-button:hover, .remove-button:hover {
+  background: var(--darkGradient);
+}
+
+.edit-button:active, .remove-button:active {
+    box-shadow: none;
+    transform: translateY(1px);
 }
