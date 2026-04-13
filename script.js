@@ -22,10 +22,31 @@ function addBookToLibrary(title, author, pages, status, startDate, endDate, rati
     books.set(crypto.randomUUID(), book);
 };
 
-// Books added as default to test layout
-addBookToLibrary("Pride and Prejudice", "Jane Austen", "400", "read", "2016-02-14", "2016-03-07", 4);
 
-addBookToLibrary("Of Mice and Men", "John Steinbeck", "107", "read", "2014-11-04", "2014-11-26", 3);
+// Assign all relevant DOM elements to a variable for use in this file
+const addBookButton = document.querySelector("#add-button");
+
+const bookForm = document.querySelector("#book-form");
+const formTitle = document.querySelector("#form-title");
+
+const titleField = document.querySelector("#title");
+const authorField = document.querySelector("#author");
+const pagesField = document.querySelector("#pages");
+const statusField = document.querySelector("#status");
+const startDateField = document.querySelector("#start-date");
+const endDateField = document.querySelector("#end-date");
+const ratingFields = document.querySelector(".rating-group");
+const ratingButtons = document.querySelectorAll(".rating-group input[type='radio']");
+
+const stars = ratingFields.querySelectorAll(".star");
+
+// Store the books container div in a variable, to add children to later
+const booksContainer = document.getElementById("books-container");
+
+// Close book using close button
+const closeDialogButton = document.querySelector("#dialog-close");
+const formDialog = document.querySelector("#add-book");
+
 
 // Function to display star rating in the book table/grid
 function displayBookRating(rating, container) {
@@ -45,9 +66,6 @@ function displayBookRating(rating, container) {
         container.appendChild(span);
     }
 }
-
-// Store the books container div in a variable, to add children to later
-const booksContainer = document.getElementById("books-container");
 
 function displayBooks() {
     // Reset container so previously displayed books aren't displayed multiple times
@@ -108,25 +126,6 @@ function displayBooks() {
     };
 };
 
-displayBooks();
-
-// Assign all relevant DOM elements to a variable for use in this file
-const addBookButton = document.querySelector("#add-button");
-
-const bookForm = document.querySelector("#book-form");
-const formTitle = document.querySelector("#form-title");
-
-const titleField = document.querySelector("#title");
-const authorField = document.querySelector("#author");
-const pagesField = document.querySelector("#pages");
-const statusField = document.querySelector("#status");
-const startDateField = document.querySelector("#start-date");
-const endDateField = document.querySelector("#end-date");
-const ratingFields = document.querySelector(".rating-group");
-const ratingButtons = document.querySelectorAll(".rating-group input[type='radio']");
-
-const stars = ratingFields.querySelectorAll(".star");
-
 // Visual reset of the stars representing the rating
 function starReset() {
     for (let i = 0; i < stars.length; i++) {
@@ -171,17 +170,6 @@ function statusDependentFormUpdate() {
             break;
     }
 }
-
-// Run once at page load to disable field associated with the satus default, which is "to-read"
-statusDependentFormUpdate()
-
-// Disable relevant fields every time status field option changes
-statusField.addEventListener("change", statusDependentFormUpdate);
-
-// Event listener to visually display rating using filled stars when a star is clicked
-ratingFields.addEventListener("change", (event) => {
-    renderStars(event.target.value);
-})
 
 function renderStars(rating) {
     // Value of form element is a string so need to transform it to a number
@@ -256,58 +244,12 @@ function handleBookSubmit(event) {
     displayBooks();
 }
 
-// Run handle function when submit button is clicked
-bookForm.addEventListener("submit", handleBookSubmit);
-
-// Close book using close button
-const closeDialogButton = document.querySelector("#dialog-close");
-const formDialog = document.querySelector("#add-book");
-
-// !!!!!!!!!!!!!!!
-// Could probably make this into a general closing function to also add to handle submit
-// !!!!!!!!!!!!!!!
-closeDialogButton.addEventListener("click", dialogClose)
-
 function dialogClose() {
     formDialog.close();
     bookForm.reset();
     extraResets();
     editingBookId = null;
 }
-
-// Event delegation to detect which child (book) was selected for editing or removing
-booksContainer.addEventListener("click", (event) => {
-    const target = event.target;
-    // Check if it was an edit button that was clicked
-    if (target.classList.contains("edit-button")) {
-        const buttonRow = target.closest(".book-row")
-        // Retrieve book's id from row's id attribute and assign it to editingBookId
-        // When editingBookId has a value/isn't falsy the form is in editing mode
-        editingBookId = buttonRow.id;
-
-        // Retrieve book object attached to an id key for editing
-        const bookToEdit = books.get(editingBookId);
-
-        // Function to open form to edit
-        editForm(bookToEdit);
-
-        // Stop the later event listener that closes the dialog from running
-        event.stopPropagation()
-    }
-
-    // Check if it was a remove button that was clicked
-    if (target.classList.contains("remove-button")) {
-        // Retrieve book's id from row's id attribute and assign it to bookId
-        const buttonRow = target.closest(".book-row")
-        bookId = buttonRow.id;
-
-        // Delete the bookId and book key value pair
-        books.delete(bookId);
-
-        // Reload book UI to reflect the book being gone 
-        displayBooks();
-    }
-});
 
 // Function that opens form and fills in all the fieldsets with values from the book's properties
 function editForm(book) {
@@ -349,6 +291,54 @@ function extraResets() {
     statusDependentFormUpdate();
 }
 
+
+// Run handle function when submit button is clicked
+bookForm.addEventListener("submit", handleBookSubmit);
+
+closeDialogButton.addEventListener("click", dialogClose)
+
+// Disable relevant fields every time status field option changes
+statusField.addEventListener("change", statusDependentFormUpdate);
+
+// Event listener to visually display rating using filled stars when a star is clicked
+ratingFields.addEventListener("change", (event) => {
+    renderStars(event.target.value);
+})
+
+// Event delegation to detect which child (book) was selected for editing or removing
+booksContainer.addEventListener("click", (event) => {
+    const target = event.target;
+    // Check if it was an edit button that was clicked
+    if (target.classList.contains("edit-button")) {
+        const buttonRow = target.closest(".book-row")
+        // Retrieve book's id from row's id attribute and assign it to editingBookId
+        // When editingBookId has a value/isn't falsy the form is in editing mode
+        editingBookId = buttonRow.id;
+
+        // Retrieve book object attached to an id key for editing
+        const bookToEdit = books.get(editingBookId);
+
+        // Function to open form to edit
+        editForm(bookToEdit);
+
+        // Stop the later event listener that closes the dialog from running
+        event.stopPropagation()
+    }
+
+    // Check if it was a remove button that was clicked
+    if (target.classList.contains("remove-button")) {
+        // Retrieve book's id from row's id attribute and assign it to bookId
+        const buttonRow = target.closest(".book-row")
+        bookId = buttonRow.id;
+
+        // Delete the bookId and book key value pair
+        books.delete(bookId);
+
+        // Reload book UI to reflect the book being gone 
+        displayBooks();
+    }
+});
+
 // Allow form to close by also clicking outside it
 document.addEventListener("click", (event) => {
     if (!bookForm.contains(event.target)) {
@@ -361,3 +351,14 @@ addBookButton.addEventListener("click", (event) => {
     editingBookId = null;
     formTitle.textContent = "Add a new book";
 })
+
+
+// Books added as default to test layout
+addBookToLibrary("Pride and Prejudice", "Jane Austen", "400", "read", "2016-02-14", "2016-03-07", 4);
+
+addBookToLibrary("Of Mice and Men", "John Steinbeck", "107", "read", "2014-11-04", "2014-11-26", 3);
+
+displayBooks();
+
+// Run once at page load to disable field associated with the satus default, which is "to-read"
+statusDependentFormUpdate()
