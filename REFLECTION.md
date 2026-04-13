@@ -1,0 +1,6 @@
+# Reflection
+This project took me a bit longer than I expected. I think it's mostly because I haven't used javascript so extensively in quite a while so I needed to brush up on a lot of the concepts.
+
+Surprisingly, it wasn't the object-related things that took up most of the time, but figuring out the star rating system and how to substitite the normal radio buttons for the stars and to fill them up correctly. This wasn't a requirement for the project, but something I decided to add by myself, so it wasn't the best use of the time. It did give me a good refresher on how to use svgs though and taught me their little nuances, such as requiring .createElementsNS instead of the regular method. Despite it being unnecessary, I am still glad I added this rating system. I also took some other liberties such as opening up the form in edit mode to allow to edit all fields, instead of just adding a button to change the reading status and I decided to add extra form fields apart from the required four.
+
+There were also some other features I wished to add, such as dragging the book rows around, or sorting them depending on the row, but that would take significantly more time. While learning how to do these things would have been useful, it's better to save them for the end project.
